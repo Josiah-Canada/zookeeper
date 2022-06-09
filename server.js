@@ -10,6 +10,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 // parse incming JSON data
 app.use(express.json());
+app.use(express.static('public'));
 
 function findById(id, animalsArray) {
   const result = animalsArray.filter(animal => animal.id === id)[0];
@@ -106,6 +107,10 @@ app.get('/api/animals', (req, res) => {
     // return the filtered results:
     return filteredResults;
   }
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+  });
 
   app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
